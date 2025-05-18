@@ -124,6 +124,13 @@ const ChatInterface: React.FC = () => {
     }
   }, [messages, currentConversationId, debouncedSave]);
 
+  // Auto-scroll to the latest message when messages change
+  useEffect(() => {
+    if (messagesEndRef && messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages, messagesEndRef]);
+
   const handleNewConversation = async () => {
     try {
       if (!conversationsDirectory) {

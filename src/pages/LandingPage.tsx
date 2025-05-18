@@ -4,10 +4,13 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Card, CardContent } from "../components/ui/card";
 import { Menu, X, MessageCircle, Heart, Headphones, Bell } from "lucide-react";
+import { LoginButton } from "../components/LoginButton";
+import { useAuth } from "../context/AuthContext";
 
 const LandingPage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   // Features section data
   const features = [
@@ -97,12 +100,17 @@ const LandingPage = () => {
             <a href="#testimonials" className="text-starry-text/80 hover:text-starry-text transition-colors">
               Testimonials
             </a>
-            <Button variant="outline" size="sm" className="mr-2 border-white/20 text-starry-text hover:bg-white/10">
-              Log in
-            </Button>
-            <Button size="sm" className="bg-starry-blue hover:bg-starry-highlight text-white">
-              Sign up
-            </Button>
+            {user ? (
+              <Button
+                size="sm"
+                className="bg-starry-blue hover:bg-starry-highlight text-white"
+                onClick={() => navigate("/chat")}
+              >
+                Go to Chat
+              </Button>
+            ) : (
+              <LoginButton />
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -141,13 +149,18 @@ const LandingPage = () => {
               >
                 Testimonials
               </a>
-              <div className="flex space-x-3 pt-2">
-                <Button variant="outline" size="sm" className="w-1/2 border-white/20 text-starry-text hover:bg-white/10">
-                  Log in
-                </Button>
-                <Button size="sm" className="w-1/2 bg-starry-blue hover:bg-starry-highlight text-white">
-                  Sign up
-                </Button>
+              <div className="pt-2">
+                {user ? (
+                  <Button
+                    size="sm"
+                    className="w-full bg-starry-blue hover:bg-starry-highlight text-white"
+                    onClick={() => navigate("/chat")}
+                  >
+                    Go to Chat
+                  </Button>
+                ) : (
+                  <LoginButton />
+                )}
               </div>
             </div>
           </div>
